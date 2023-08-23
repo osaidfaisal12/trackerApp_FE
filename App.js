@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -9,6 +9,7 @@ import AccountScreen from './src/screens/AccountScreen';
 import SigninScreen from './src/screens/SigninScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import TrackDetailScreen from './src/screens/TrackDetailScreen';
+import { AuthContext } from './src/store/AuthContext';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -22,18 +23,18 @@ const AppStack = () => (
 );
 
 const AuthStack = () => (
-  <Stack.Navigator>
-    <Stack.Screen name="SignIn" component={SigninScreen} />
+  <Stack.Navigator screenOptions={{headerShown : false}} >
     <Stack.Screen name="SignUp" component={SignupScreen} />
+    <Stack.Screen name="SignIn" component={SigninScreen} />
   </Stack.Navigator>
 );
 
 const App = () => {
-  const [isSignedIn, setIsSignedIn] = useState(true);
+  const {token} = useContext(AuthContext)
 
   return (
     <NavigationContainer>
-      {isSignedIn ? (
+      {token ? (
         <Stack.Navigator>
           <Stack.Screen name="App" component={AppStack} />
           <Stack.Screen name="Track details" component={TrackDetailScreen} />
