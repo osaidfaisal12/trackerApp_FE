@@ -35,7 +35,7 @@ const App = () => {
   return (
     <NavigationContainer>
       {token ? (
-        <Stack.Navigator>
+        <Stack.Navigator  screenOptions={{headerShown : false}}>
           <Stack.Screen name="App" component={AppStack} />
           <Stack.Screen name="Track details" component={TrackDetailScreen} />
         </Stack.Navigator>

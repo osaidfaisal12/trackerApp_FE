@@ -1,5 +1,5 @@
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Form from '../components/Form'
 import { AuthContext } from '../store/AuthContext'
 import NavLink from '../components/NavLink'
@@ -10,7 +10,11 @@ const SignupScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const {signup,errorMessage, clearErrorMessage} = useContext(AuthContext)
+  const {signup,errorMessage, clearErrorMessage, tryLocalSignIn} = useContext(AuthContext)
+
+  useEffect(()=>{
+    tryLocalSignIn()
+  },[])
 
   useFocusEffect(
     React.useCallback(() => {

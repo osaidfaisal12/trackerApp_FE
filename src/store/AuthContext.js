@@ -42,12 +42,26 @@ export const AuthProvider = ({children}) => {
     setErrorMessage("")
   }
 
+  const signOut = async () => {
+    await AsyncStorage.removeItem('token')
+    setToken('')
+  }
+
+  const tryLocalSignIn = async () => {
+    const token = await AsyncStorage.getItem('token')
+    if ( token ) {
+      setToken(token)
+    }
+  }
+
   const value = {
     token,
     errorMessage,
     signup,
     signin,
-    clearErrorMessage
+    clearErrorMessage,
+    tryLocalSignIn,
+    signOut
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
